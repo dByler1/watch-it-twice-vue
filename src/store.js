@@ -55,6 +55,7 @@ export const store = new Vuex.Store({
             })
         },
         AUTH_REQUEST_ACTION: ({ commit, dispatch }, userData) => { // eslint-disable-line no-unused-vars
+            console.log(JSON.stringify(userData))
             return new Promise((resolve, reject) => { 
                 commit('AUTH_REQUEST_MUTATION')
                 axios({ 
