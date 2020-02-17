@@ -78,6 +78,8 @@ export const store = new Vuex.Store({
                     .catch(err => {
                         commit('AUTH_ERROR_MUTATION', err)
                         localStorage.removeItem('user-token') // if the request fails, remove any possible user token
+                        console.log(err)
+                        console.log(err.response)
                         reject(err)
                     })
             })
