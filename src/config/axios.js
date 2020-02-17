@@ -20,4 +20,4 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error)
 });
 
-axios.defaults.baseURL = development ? 'http://localhost:3000/' : 'https://git.heroku.com/watch-it-twice.git/'
+axios.defaults.baseURL = development ? 'http://localhost:3000/' : 'https://git.heroku.com/watch-it-twice.git/';
