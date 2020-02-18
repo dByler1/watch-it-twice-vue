@@ -64,6 +64,8 @@ export default {
                 this.$router.push( { path: '/' } )
             })
             .catch(err => {
+                console.log(err)
+                console.log(err.response)
                 this.showError = true;
                 this.errorMsg = err.data.statusText;
             })
