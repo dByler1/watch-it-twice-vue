@@ -4,7 +4,7 @@
         <div class="col-12 col-md-8">
             <h4 class="mb-3 text-uppercase lead">Feed of the future</h4>
             <ul class="list-unstyled" v-if="reviews.length > 0">
-                <li class="media mb-4 d-flex align-items-center" v-for="review of reviews" v-bind:key="review._id">
+                <li class="media mb-4 d-flex align-items-center" v-for="review of reviews.slice().reverse()" v-bind:key="review._id">
                     <!-- if this.Poster 'N/A' -->
                     <div class="poster-resize mr-3" v-if="review.imgURL === 'N/A'">
                         <div class="poster-na poster img-thumbnail">No Poster Available</div>
