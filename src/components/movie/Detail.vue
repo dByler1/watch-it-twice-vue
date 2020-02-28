@@ -127,7 +127,7 @@ export default {
           //const res = await axios.get(`http://www.omdbapi.com/?i=${this.imdbID}&apikey=85f5c0de`);
           const res = await axios({
                         method: "GET",
-                        url: `http://www.omdbapi.com/?i=${this.imdbID}&apikey=85f5c0de`,
+                        url: `https://www.omdbapi.com/?i=${this.imdbID}&apikey=85f5c0de`,
                         transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
                     })
           this.detail = res.data;
