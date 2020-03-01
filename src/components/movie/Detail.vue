@@ -106,7 +106,7 @@ export default {
         })
         .catch(err => { 
             console.log(err)
-            console.log(err.response)
+            //console.log(err.response)
             })
       },
       formatDate (array) {
@@ -124,15 +124,15 @@ export default {
 },
   async created() {
       try {
-          //const res = await axios.get(`http://www.omdbapi.com/?i=${this.imdbID}&apikey=85f5c0de`);
           const res = await axios({
                         method: "GET",
-                        url: `https://www.omdbapi.com/?i=${this.imdbID}&apikey=85f5c0de`,
+                        url: `search/id/${this.imdbID}`,
                         transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
                     })
+                    console.log(res.data)
           this.detail = res.data;
         } catch (e) {
-          console.log()
+          console.log(e)
         }
 
         try {

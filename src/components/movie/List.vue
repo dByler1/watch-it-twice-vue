@@ -58,12 +58,12 @@
         methods: {
             async omdbAPICall(searchTerm) {
                 try {
-                    //const res = await axios.get(`http://www.omdbapi.com/?s=${searchTerm}&apikey=85f5c0de`);
                     const res = await axios({
                         method: "GET",
-                        url: `https://www.omdbapi.com/?s=${searchTerm}&apikey=85f5c0de`,
+                        url: `search/term/${searchTerm}`,
                         transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
                     })
+                    .catch(err => console.log(err))
                     const data = await this.findDuplicates(res.data.Search);
                     this.movies = data;
                 } catch (e) {
