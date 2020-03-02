@@ -52,7 +52,7 @@
                     </router-link>
                     
                     <span class="badge badge-primary">{{review.rating}} of 5</span>
-                    <span>{{review.reviewString}}</span>
+                    <p class="pre-wrap">{{review.reviewString}}</p>
                 </li>
             </ul>
             <p v-if="!reviews">No reviews yet - be the first!</p>
@@ -101,6 +101,10 @@ export default {
             this.addReviewData.rating = null;
             axios.get(`review/reviews-by-id/${this.imdbID}`)
             .then(res => {
+                console.log(res)
+                if (res === 'Aleady reviewed this movie') {
+                    return console.log(res)
+                }
                 this.reviews = this.formatDate(res.data.data)
             })
         })

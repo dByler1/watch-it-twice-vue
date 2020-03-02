@@ -22,7 +22,7 @@
                         </router-link>
                         <div><span class="badge badge-primary">{{review.rating}} of 5</span></div>
                         
-                        <span>{{review.reviewString}}</span>
+                        <p class="pre-wrap">{{review.reviewString}}</p>
                     </div>
                 </li>
             </ul>

@@ -64,7 +64,11 @@ export default {
 </script>
 
 <style>
-.navbar-brand-logo {
-  max-width: 100px;
-}
+  .navbar-brand-logo {
+    max-width: 100px;
+  }
+
+  .pre-wrap {
+    white-space: pre-wrap;
+  }
 </style>

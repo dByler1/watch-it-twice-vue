@@ -5,7 +5,7 @@
       </router-link>
       
       <p>{{review.userName}} <span>{{review.date}}</span></p>
-      <span>{{review.reviewString}}</span>
+      <p class="pre-wrap">{{review.reviewString}}</p>
       <div class="mt-3" v-if="jwtData && jwtData.userID === review.user">
           <button type="button" 
               class="btn btn-secondary" 
@@ -15,14 +15,18 @@
       </div>
       <form class="form-group mt-4" @submit.prevent="editReview(review._id)" v-show="showForm">
           <div class="form-group">
-              <textarea v-model="newReviewData.reviewString" class="form-control" id="addDetailReview" name="reviewString" rows="3" :placeholder="review.reviewString"></textarea>
+              <textarea v-model="newReviewData.reviewString" class="form-control" id="addDetailReview" name="reviewString" rows="6" ></textarea>
           </div>
           <div class="form-group mb-4">
             <b-form-select v-model="newReviewData.rating" :options="rating_options"></b-form-select>
           </div>
           <div class="d-flex justify-content-between">
             <button type="button" @click.prevent="deleteReview(review._id)" role="button" class="btn btn-danger mb-2"><b-icon-trash></b-icon-trash></button>
-            <button type="submit" class="btn btn-primary mb-2">Submit Edit</button>
+            <div>
+              <button class="btn btn-secondary mb-2 mr-1" @click.prevent="toggleVisibility()">Cancel</button>
+              <button type="submit" class="btn btn-primary mb-2">Submit Edit</button>
+            </div>
+            
           </div>
           
       </form>
@@ -39,8 +43,8 @@ export default {
     return {
       showForm: false,
       newReviewData: {
-          reviewString: null,
-          rating: null,
+          reviewString: this.review.reviewString,
+          rating: this.review.rating,
           reviewID: null
       },
       rating_options: [

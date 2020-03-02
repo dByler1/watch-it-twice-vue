@@ -56,8 +56,15 @@ export default {
        
               for(var i = this.reviews.length - 1; i >= 0; i--) {
                   if(this.reviews[i]._id === newReviewData.reviewID) {
-                      this.reviews[i].reviewString = newReviewData.reviewString;
-                      this.reviews[i].rating = newReviewData.rating;
+                      if (newReviewData.reviewString) {
+                        this.reviews[i].reviewString = newReviewData.reviewString;
+                      }
+
+                      if (newReviewData.rating) {
+                        this.reviews[i].rating = newReviewData.rating;  
+                      }
+                      
+                      
                   }
               }
           })
@@ -90,7 +97,6 @@ export default {
     created() {
         axios.get('review/reviews-by-user/' + this.userID)
         .then(res => {
-            console.log(res.data)
             this.username = res.data[0].userName
             this.reviews = res.data
         })

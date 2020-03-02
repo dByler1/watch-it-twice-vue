@@ -64,19 +64,34 @@
                         transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
                     })
                     .catch(err => console.log(err))
-                    const data = await this.findDuplicates(res.data.Search);
+                    let data = await this.filterDuplicates(res.data.Search);
+                    data = await this.filterType(data);
+                    console.log(data)
                     this.movies = data;
                 } catch (e) {
                     console.log(e)
                 }
             },
-            findDuplicates(data) {
-                data = data.filter((el, index, self) =>
-                    index === self.findIndex((t) => (
-                        t.imdbID === el.imdbID
-                    ))
-                )
+            filterDuplicates(data) {
+                
+                    data = data.filter((el, index, self) =>
+                        index === self.findIndex((t) => (
+                            t.imdbID === el.imdbID
+                        ))
+                    );
+                
                 return data
+            },
+            filterType(data) {
+                let newData = [];
+
+                data.forEach(node => {
+                    console.log(node)
+                     if (node.Type != 'game') {
+                         newData.push(node)
+                    }
+                });
+                return newData
             }
         }
     }
