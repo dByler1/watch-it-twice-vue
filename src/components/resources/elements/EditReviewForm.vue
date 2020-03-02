@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="review-div-background">
       <router-link tag="a" :to="'/detail/'+ review.movieID" class="mt-3 mb-1">
           <h5>{{review.movieName}} <span class="badge badge-primary">{{review.rating}} of 5</span></h5>
       </router-link>
       
       <p>{{review.userName}} <span>{{review.date}}</span></p>
-      <p class="pre-wrap">{{review.reviewString}}</p>
+      <p v-if="review.reviewString"  class="pre-wrap review-string-background">{{review.reviewString}}</p>
       <div class="mt-3" v-if="jwtData && jwtData.userID === review.user">
           <button type="button" 
               class="btn btn-secondary" 

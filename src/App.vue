@@ -71,4 +71,17 @@ export default {
   .pre-wrap {
     white-space: pre-wrap;
   }
+
+  .review-string-background {
+    /* background: #f5f5f5; */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 0 3px #f5f5f5;;
+}
+
+  .review-div-background {
+    background: #fbfbfb;
+    padding: 20px;
+    border-radius: 10px;
+  }
 </style>
