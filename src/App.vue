@@ -76,11 +76,11 @@ export default {
     /* background: #f5f5f5; */
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 0 3px #f5f5f5;;
+    box-shadow: 0 0 0 3px #f9f9f9;;
 }
 
   .review-div-background {
-    background: #fbfbfb;
+    background: #fdfcfc;
     padding: 20px;
     border-radius: 10px;
   }
