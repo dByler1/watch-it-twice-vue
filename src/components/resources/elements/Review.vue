@@ -1,7 +1,7 @@
 <template>
   <div v-if="review.reviewString" class="review-div-background review-string-background">
         <p class="pre-wrap mb-0" :class="{ 'truncate-overflow' : this.truncate}">{{review.reviewString}}</p>
-        <a role="button" v-if="showMore" @click="toggleTruncate()" class="font-italic show-more d-block mt-1">{{show_hide_text}}</a>
+        <a role="button" v-if="showMore" @click="toggleTruncate()" class="font-italic show-more d-block mt-2">{{show_hide_text}}</a>
     </div>
 </template>
 
