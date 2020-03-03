@@ -48,7 +48,7 @@ export const store = new Vuex.Store({
     },
     actions: {
         UPDATE_GLOBAL_LOADING({ commit }, boolean) {
-            commit('AUTH_REQUEST_MUTATION', boolean)
+            commit('UPDATE_GLOBAL_LOADING', boolean)
         },
         REGISTER_REQUEST_ACTION({ commit }, registerData) { // eslint-disable-line no-unused-vars
             return new Promise((resolve, reject) => {

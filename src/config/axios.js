@@ -10,7 +10,7 @@ if (token) {
 }
 
 axios.interceptors.request.use(function (config) {
-    store.commit("UPDATE_GLOBAL_LOADING", true) //vuex mutation set loading state to true
+    store.dispatch("UPDATE_GLOBAL_LOADING", true) //vuex mutation set loading state to true
     return config;
 }, function (error) {
     return Promise.reject(error);
@@ -19,7 +19,7 @@ axios.interceptors.request.use(function (config) {
 //Axios response interceptor
 
 axios.interceptors.response.use(function (config) {
-    store.commit("UPDATE_GLOBAL_LOADING", false) //vuex mutation set loading state to false
+    store.dispatch("UPDATE_GLOBAL_LOADING", false) //vuex mutation set loading state to false
     return config;
 }, function (error) {
     console.log(error.response.data)

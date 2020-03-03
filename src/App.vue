@@ -59,11 +59,11 @@ export default {
       'isLoading'
     ])
   },
-  beforeCreate() {
-    if(this.$store.getters.isAuthenticated && !this.$store.getters.getUserData.email) {
-      this.$store.dispatch('USER_DATA_REQUEST_ACTION')
-    }
-  }
+  // beforeCreate() {
+  //   if(this.$store.getters.isAuthenticated && !this.$store.getters.getUserData.email) {
+  //     this.$store.dispatch('USER_DATA_REQUEST_ACTION')
+  //   }
+  // }
   
 }
 </script>
