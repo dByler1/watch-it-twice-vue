@@ -6,14 +6,14 @@
             <img class="navbar-brand-logo" src="./assets/Watch_It_Twice_Logo_Idea.png" alt="Kitten">
           </b-navbar-brand>
         </router-link>  
-        <b-navbar-nav>
-          <b-nav-item :to="'/feed/'" right>Feed</b-nav-item>
-        </b-navbar-nav>
         
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
+            <b-nav-item :to="'/'" right>Search</b-nav-item>
+            <b-nav-item :to="'/feed/'" right>Feed</b-nav-item>
+            <b-nav-item v-if="isAuthenticated" :to="'/profile/' + getUserData.userID">Profile</b-nav-item>
             <b-nav-item v-if="!isAuthenticated" :to="'/register/'" right>Register</b-nav-item>
             <b-nav-item v-if="!isAuthenticated" :to="'/login/'" right>Login</b-nav-item>
             
@@ -22,7 +22,6 @@
               <template v-slot:button-content>
                 <em>{{getUserData.username}}</em>
               </template>
-              <b-dropdown-item :to="'/profile/' + getUserData.userID">Profile</b-dropdown-item>
               <b-dropdown-item :to="'/settings/'">Settings</b-dropdown-item>
               <b-dropdown-item @click="signOut()">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
