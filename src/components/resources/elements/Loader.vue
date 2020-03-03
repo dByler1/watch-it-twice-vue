@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isVisible && show" class="loader-overlay">
+    <div v-if="isVisible" class="loader-overlay">
         <div class="loader"></div>
         <span class="text" v-html="text"></span>
     </div>
@@ -10,23 +10,8 @@ export default {
     name: "Loader",
     props: {
         isVisible: {type: Boolean, required: true},
-        text: {type: String, required: false, default: "The server fell asleep :(" + "\n" + "(hosting is free)"},
+        text: {type: String, required: false, default: "The server fell asleep :(" + "<br/>" + "Hosting is free tho"},
     },
-    data() {
-        return {
-            show: false
-        }
-    },
-    methods: {
-    delayedStart () {
-        setTimeout(() => {
-        this.show = true
-        }, 2000)
-    }
-    },
-    mounted () {
-        this.delayedStart()
-    }
 }
 </script>
 

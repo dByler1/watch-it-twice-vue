@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     state: {
         token: localStorage.getItem('user-token') || null,
         status: null,
-        load: null,
+        load: false,
         userData: {
             email: null,
             username: null,

@@ -21,6 +21,7 @@ axios.interceptors.response.use(function (response) {
 });
 
 axios.interceptors.request.use(function (config) {
+    
     store.commit("UPDATE_GLOBAL_LOADING", true) //vuex mutation set loading state to true
     return config;
 }, function (error) {
