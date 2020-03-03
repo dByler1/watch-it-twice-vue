@@ -41,13 +41,9 @@ export default {
   components: {
     Loader
   },
-  mounted() {
-        this.enableInterceptor()
-  },
   data () {
     return {
-      isLoading: false,
-      axiosInterceptor: null,
+ 
     }
   },
   methods: {
@@ -55,31 +51,12 @@ export default {
       this.$store.dispatch("AUTH_LOGOUT_ACTION")
       this.$router.push({ path: '/login'})
     },
-    enableInterceptor() {
-      this.axiosInterceptor = window.axios.interceptors.request.use((config) => {
-          this.isLoading = true
-          return config
-      }, (error) => {
-          this.isLoading = false  
-          return Promise.reject(error)
-      })
-      
-      window.axios.interceptors.response.use((response) => {
-          this.isLoading = false    
-          return response
-      }, function(error) {
-          this.isLoading = false
-          return Promise.reject(error)
-      })
-    },
-    disableInterceptor() {
-        window.axios.interceptors.request.eject(this.axiosInterceptor)
-    },     
   },
   computed: {
     ...mapGetters([
       'isAuthenticated',
-      'getUserData'
+      'getUserData',
+      'isLoading'
     ])
   },
   beforeCreate() {

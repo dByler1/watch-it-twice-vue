@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
     state: {
         token: localStorage.getItem('user-token') || null,
         status: null,
+        load: null,
         userData: {
             email: null,
             username: null,
@@ -35,6 +36,9 @@ export const store = new Vuex.Store({
             state.userData.username = data.data.name;
             state.userData.userID = data.data._id;
         },
+        UPDATE_GLOBAL_LOADING: (state, boolean) => {
+            state.load = boolean;
+        },
         REMOVE_USER_DATA_MUTATION: (state) => {
             state.userData.email = null;
             state.userData.username = null;
@@ -43,6 +47,9 @@ export const store = new Vuex.Store({
 
     },
     actions: {
+        UPDATE_GLOBAL_LOADING({ commit }, boolean) {
+            commit('AUTH_REQUEST_MUTATION', boolean)
+        },
         REGISTER_REQUEST_ACTION({ commit }, registerData) { // eslint-disable-line no-unused-vars
             return new Promise((resolve, reject) => {
                 axios.post('auth/register', registerData)
@@ -122,6 +129,7 @@ export const store = new Vuex.Store({
         jwt: state => state.token,
         jwtData: (state, getters) => state.token ? JSON.parse(atob(getters.jwt.split('.')[1])) : null,
         isAuthenticated: (state)  =>  state.token ? true : false,   
-        getUserData: (state) => state.userData
+        getUserData: (state) => state.userData,
+        isLoading: (state) => state.load
     }
 })
