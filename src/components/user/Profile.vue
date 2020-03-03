@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             
-            <div class="col-md-6 col-sm-12 mt-3 mb-5">
+            <div class="col-md-8 col-sm-12 mt-3 mb-5">
                 <h5>Reviews</h5>
                 <!-- {{#if reviews}} -->
                 <ul v-if="this.reviews" class="list-group list-group-flush">

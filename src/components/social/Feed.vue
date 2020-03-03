@@ -4,7 +4,7 @@
         <div class="col-12 col-md-8">
             <h4 class="mb-3 text-uppercase lead">Feed of the future</h4>
             <ul class="list-unstyled" v-if="reviews.length > 0">
-                <li class="media mb-4 d-flex align-items-center" v-for="review of reviews.slice().reverse()" v-bind:key="review._id">
+                <li class="media mb-5 d-flex" v-for="review of reviews.slice().reverse()" v-bind:key="review._id">
                     <!-- if this.Poster 'N/A' -->
                     <div class="poster-resize mr-3" v-if="review.imgURL === 'N/A'">
                         <div class="poster-na poster img-thumbnail">No Poster Available</div>
@@ -16,13 +16,17 @@
                     </div>
                 
                     <div class="media-body">
-                        <router-link tag="b-button" :to="'/detail/'+ review.movieID" class="mt-3 mb-1">{{review.movieName}}</router-link>
-                         <router-link tag="a" :to="'/profile/'+ review.user" class="mt-3 mb-1">
-                            <p>{{review.userName}} <span>{{review.date}}</span></p>
+                        <b-button router-tag="button" :to="'/detail/'+ review.movieID" variant="outline-secondary">{{review.movieName}}</b-button>
+                         <router-link tag="a" role="button" :to="'/profile/'+ review.user" >
+                            <div class="d-flex align-items-center mt-2 mb-2">
+                                <span class="mr-2">{{review.userName}} </span> 
+                                <span class="badge badge-primary">{{review.rating}} of 5</span>
+                            </div>
                         </router-link>
-                        <div><span class="badge badge-primary">{{review.rating}} of 5</span></div>
+                        <span class="mb-3 d-block">{{review.date}}</span>
+    
+                        <Review v-if="review.reviewString" :review="review"></Review>
                         
-                        <p class="pre-wrap">{{review.reviewString}}</p>
                     </div>
                 </li>
             </ul>
@@ -33,20 +37,24 @@
 
 <script>
 import axios from 'axios';
+import Review from '../resources/elements/Review';
+
 export default {
     name: "Feed",
+    components: {
+        Review
+    },
     data() {
         return {
-            reviews: []
+            reviews: [],
+            show_hide_text: "Show More"
         }
     },
     methods: {
-
     },
     created() {
         axios.get('review/all-reviews')
         .then(res => {
-            console.log(res)
             this.reviews = res.data.data
         })
         .catch(err => { 
@@ -58,30 +66,32 @@ export default {
 </script>
 
 <style scoped>
-.poster-resize {
-    max-width: 150px;
-    width: 100%;
-}
 
-.poster-resize .poster {
-  width: 100%;
-  padding-top: 142%;
-  background-size: contain;
-}
-
-/* padding-top equation */
-/* (height) / (width) = ? */
-
-.poster-resize .poster-na {
-    background: #A09F9F;
-    color: #fff;
-}
-
-/*=== Small Screens ===*/
-
-@media (max-width: 568px) {
     .poster-resize {
-        max-width: 75px;
+        max-width: 150px;
+        width: 100%;
     }
-}
+
+    .poster-resize .poster {
+    width: 100%;
+    padding-top: 142%;
+    background-size: contain;
+    }
+
+    /* padding-top equation */
+    /* (height) / (width) = ? */
+
+    .poster-resize .poster-na {
+        background: #A09F9F;
+        color: #fff;
+    }
+
+
+    /*=== Small Screens ===*/
+
+    @media (max-width: 568px) {
+        .poster-resize {
+            max-width: 75px;
+        }
+    }
 </style>

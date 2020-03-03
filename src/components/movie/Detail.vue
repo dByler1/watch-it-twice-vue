@@ -54,8 +54,7 @@
                                                     </div>
                                                 </router-link>
                                                 <span class="mb-3 mt-1 d-block">{{review.date}}</span>
-                                                
-                                                <p class="pre-wrap review-string-background">{{review.reviewString}}</p>
+                                                <Review v-if="review.reviewString" :review="review"></Review>
                                             </div>
                                         </li>
                                     </ul>
@@ -69,48 +68,6 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <form @submit.prevent="createReview()">
-                <div class="form-group">
-                    <label for="addDetailReview">Add a Review</label>
-                    <textarea v-model="addReviewData.reviewString" class="form-control" id="addDetailReview" name="reviewString" rows="6" placeholder="What do you think?"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="addDetailReview">Add a Rating</label>
-                    <select v-model="addReviewData.rating" class="form-control" name="rating" id="addDetailRating" placeholder="Rating">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                </div>
-
-                <button v-if="this.$store.getters.isAuthenticated" type="submit" class="btn btn-primary btn-block mt-3">Add Review</button>
-                <a v-if="!this.$store.getters.isAuthenticated" class="btn btn-secondary btn-block mt-3" @click="toLogin()" role="button">Please login to add a review</a>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12 mt-5 mb-5">
-            <h5>Reviews</h5>
-            
-            <ul v-if="reviews" class="list-group list-group-flush">
-                <li class="list-group-item" v-for="review of reviews.slice().reverse()" v-bind:key="review.imdbID">
-                    <div class="review-div-background">
-                        <router-link tag="a" :to="'/profile/'+ review.user" class="mt-3 mb-1">
-                            <p>{{review.userName}} <span>{{review.date}}</span></p>
-                        </router-link>
-                        
-                        <span class="badge badge-primary">{{review.rating}} of 5</span>
-                        <p class="pre-wrap review-string-background">{{review.reviewString}}</p>
-                    </div>
-                </li>
-            </ul>
-            <p v-if="!reviews">No reviews yet - be the first!</p>
-        </div>
-    </div> -->
 </div>
 
 </template>
@@ -119,9 +76,14 @@
 import axios from "axios";
 import moment from 'moment';
 import { mapGetters } from 'vuex';
+import Review from '../resources/elements/Review';
+
 export default {
   name: 'Detail',
   props: ['imdbID'],
+  components: {
+    Review
+  },
   data () {
       return {
           detail: {},
@@ -146,7 +108,8 @@ export default {
                 movieID: this.detail.imdbID,
                 movieName: this.detail.Title,
                 imgURL: this.detail.Poster,
-                userName: this.getUserData.username
+                userName: this.getUserData.username,
+                show_hide_text: "Show More"
             }
         })
         .then(data => { // eslint-disable-line no-unused-vars
@@ -181,12 +144,11 @@ export default {
 },
   async created() {
       try {
-          const res = await axios({
-                        method: "GET",
-                        url: `search/id/${this.imdbID}`,
-                        transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
-                    })
-                    console.log(res.data)
+            const res = await axios({
+            method: "GET",
+            url: `search/id/${this.imdbID}`,
+            transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
+        })
           this.detail = res.data;
         } catch (e) {
           console.log(e)
@@ -194,9 +156,8 @@ export default {
 
         try {
             const reviewCall = await axios.get(`review/reviews-by-id/${this.imdbID}`)
-            console.log(reviewCall.data)
-            const formattedReviewCall = await this.formatDate(reviewCall.data.data);
-            this.reviews = formattedReviewCall;
+            const dateFormattedReviewCall = await this.formatDate(reviewCall.data.data);
+            this.reviews = dateFormattedReviewCall;
         } catch (error) {
             console.log(error)
         }

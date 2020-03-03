@@ -5,7 +5,7 @@
       </router-link>
       
       <p>{{review.userName}} <span>{{review.date}}</span></p>
-      <p v-if="review.reviewString"  class="pre-wrap review-string-background">{{review.reviewString}}</p>
+      <Review v-if="review.reviewString" :review="review"></Review>
       <div class="mt-3" v-if="jwtData && jwtData.userID === review.user">
           <button type="button" 
               class="btn btn-secondary" 
@@ -35,10 +35,14 @@
 </template>
 
 <script>
+import Review from './Review';
 
 export default {
   props: ['review', 'jwtData'],
   name: 'EditReviewFrom',
+  components: {
+    Review
+  },
   data () {
     return {
       showForm: false,
