@@ -37,6 +37,8 @@ export default {
         background-color: rgba(0, 0, 0, 0.7);
         z-index: 999;
         cursor: pointer;
+        transition-delay: 1500ms;
+        transition-property: background-color, position;
     }
     .loader-overlay span.text {
         display: inline-block;

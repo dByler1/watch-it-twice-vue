@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import './config/axios';
+import Vuelidate from 'vuelidate'
 import { router } from './Router';
 import { store } from './store';
 
@@ -12,6 +13,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false;
 
