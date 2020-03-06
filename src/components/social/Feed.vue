@@ -2,7 +2,7 @@
   
    <div class="row">
         <div class="col-12 col-md-8">
-            <h4 class="mb-3 text-uppercase lead">Feed of the future</h4>
+            <h4 class="mb-5 mt-5 text-uppercase lead">Feed of the future</h4>
             <ul class="list-unstyled" v-if="reviews.length > 0">
                 <li class="media mb-5 d-flex" v-for="review of reviews.slice().reverse()" v-bind:key="review._id">
                     <!-- if this.Poster 'N/A' -->
@@ -58,6 +58,11 @@ export default {
             this.reviews = res.data.data
         })
         .catch(err => { 
+            const errDataObj = {
+                msg: 'Sorry, there was a problem getting feed results.',
+                method: 'push'
+            }
+            this.$store.dispatch('PAGE_ERROR_ACTION', errDataObj)
             console.log(err)
             console.log(err.response)
         })

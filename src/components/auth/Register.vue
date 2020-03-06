@@ -4,18 +4,11 @@
             <div class="card card-body">
                 <h1 class="text-center mb-3">
                     <i class="fas fa-user-plus"></i> Register
-                </h1>
-                    <div v-for="error of errors" :key="error.msg">
-                        <b-alert 
-                        variant="danger" 
-                        dismissible
-                        show>
-                            {{ error.msg }}
-                        </b-alert> 
-                    </div>
-                    
-                       
+                </h1>             
                 <form @submit.prevent="register()">
+                     <div v-for="(message, index) of formErrors" :key="index" >
+                        <ErrorMessage :message="message" ></ErrorMessage>
+                    </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input v-model="registerData.name" type="name" id="name" name="name" class="form-control" placeholder="Enter Name" required/>
@@ -42,35 +35,37 @@
     </div>
 </template>
 <script>
-
-
-
+import ErrorMessage from '../resources/elements/ErrorMessage';
 export default {
     name: "Register",
+    components: {
+        ErrorMessage
+    },
     data () {
         return {
-            errors: null,
             registerData: {
                 name: '',
                 email: '',
                 password: '',
                 password2: ''
-            }
+            },
+            formErrors: []
         }
     },
     methods: {
         register() {
-            this.errors = null;
             if (this.registerData.password != this.registerData.password2) {
-                return this.errors = [{'msg':'Password confirmation does not match password'}]
+                return this.formErrors.push('Password confirmation does not match password')
             }
             this.$store.dispatch('REGISTER_REQUEST_ACTION', this.registerData)
             .then((res) => { // eslint-disable-line no-unused-vars
-                console.log(res)
                 this.$router.push({ path: '/login'})
             })
             .catch(error => {
-                this.errors = error.data.errors;
+                error.data.errors.forEach(node => {
+                    this.formErrors.push(node.msg)
+                });
+                
             })
             
         }

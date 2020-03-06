@@ -3,22 +3,10 @@
         <div class="col-md-6 m-auto">
             <div class="card card-body">
                 <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i> Login</h1>
-                <div v-if="showSuccess">
-                   <b-alert 
-                    variant="success" 
-                    show>
-                        Registration Successful. Please login.
-                    </b-alert>  
-                </div>
-                   <div v-if="showError">
-                   <b-alert 
-                    variant="danger" 
-                    show>
-                        {{ errorMsg }}
-                    </b-alert>  
-                </div>
-                
                 <form @submit.prevent="login()">
+                     <div v-for="(message, index) of formErrors" :key="index" >
+                        <ErrorMessage :message="message" ></ErrorMessage>
+                    </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input v-model="loginData.email" type="email" id="email" name="email" class="form-control" placeholder="Email" required/>
@@ -40,14 +28,15 @@
     </div>
 </template>
 <script>
-
+import ErrorMessage from '../resources/elements/ErrorMessage';
 export default {
     name: "Login",
+    components: {
+        ErrorMessage
+    },
     data () {
         return {
-            showSuccess: false,
-            showError: false,
-            errorMsg: null,
+            formErrors: [],
             loginData: {
                 email: null,
                 password: null
@@ -56,18 +45,18 @@ export default {
     },
     methods: {
         login() {
-            this.showSuccess = false;
             
             //this.$store.dispatch('login', this.loginData)
             this.$store.dispatch('AUTH_REQUEST_ACTION', this.loginData)
             .then(res => { // eslint-disable-line no-unused-vars
-                this.$router.push( { path: '/' } )
+                this.$router.push( { path: '/feed' } )
             })
             .catch(err => {
-                console.log(err)
-                console.log(err.response)
-                this.showError = true;
-                this.errorMsg = err.data.statusText;
+                if(!err.response.data) {
+                    return this.formErrors.push(err.response.statusText)
+                }
+                return this.formErrors.push(err.response.data)
+                
             })
         }
     },

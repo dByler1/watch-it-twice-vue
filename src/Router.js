@@ -24,7 +24,14 @@ const routes = [
           if(store.state.token) {
               next()
           } else {
-              next('/login')
+              console.log('router guard settings')
+              const errDataObj = {
+                  msg: "You have to login to access the settings page",
+                  method: 'push'
+              }
+              store.dispatch('PAGE_ERROR_ACTION', errDataObj)
+              next({ path: '/login' })
+            //   next('/login')
           }
       }
     },

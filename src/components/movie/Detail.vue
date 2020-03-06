@@ -4,7 +4,7 @@
         <!-- {{> messages }} -->
         <div class="col-12">
             <div class="media mt-5 mb-5 d-flex flex-column flex-md-row">
-                <img :src="detail.Poster" class="mr-4 img-thumbnail" alt="...">
+                <img v-if="!detail.Poster === 'N/A'" :src="detail.Poster" class="mr-4 img-thumbnail" alt="...">
                 <div class="media-body">
                     <b-tabs content-class="mt-4">
                         <b-tab title="Details"> <h5 class="mt-0">{{detail.Title}}</h5>
@@ -20,7 +20,11 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <form @submit.prevent="createReview()">
+                                        <div v-for="(message, index) of addReviewErrorMessages" :key="index" >
+                                            <ErrorMessage :message="message" ></ErrorMessage>
+                                        </div>
                                         <div class="form-group">
+                                            
                                             <label for="addDetailReview">Add a Review</label>
                                             <textarea v-model="addReviewData.reviewString" class="form-control" id="addDetailReview" name="reviewString" rows="6" placeholder="What do you think?"></textarea>
                                         </div>
@@ -43,7 +47,9 @@
                             <div class="row">
                                 <div class="col-sm-12 mt-5 mb-5">
                                     <h5>Reviews</h5>
-                                    
+                                    <div v-for="(message, index) of getReviewErrors" :key="index" >
+                                        <ErrorMessage :message="message" ></ErrorMessage>
+                                    </div>
                                     <ul v-if="reviews" class="list-group list-group-flush">
                                         <li class="list-group-item" v-for="review of reviews.slice().reverse()" v-bind:key="review.imdbID">
                                             <div class="review-div-background">
@@ -58,7 +64,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <p v-if="!reviews">No reviews yet - be the first!</p>
+                                    <p v-if="!reviews.length">No reviews yet - be the first!</p>
                                 </div>
                             </div>
                         </b-tab>
@@ -77,12 +83,14 @@ import axios from "axios";
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import Review from '../resources/elements/Review';
+import ErrorMessage from '../resources/elements/ErrorMessage';
 
 export default {
   name: 'Detail',
   props: ['imdbID'],
   components: {
-    Review
+    Review,
+    ErrorMessage
   },
   data () {
       return {
@@ -91,11 +99,20 @@ export default {
           addReviewData: {
               reviewString: null,
               rating: null
-          }
+          },
+          addReviewErrorMessages: [],
+          getReviewErrors: []
       }
   },
   methods: {
+      checkForm () {
+          
+      },
       createReview() {
+          if (!this.addReviewData.rating) {
+              this.addReviewErrorMessages.push('Please add a rating')
+              return
+          }
           axios({
             method: "POST",
             url: '/review/add-review',
@@ -117,16 +134,17 @@ export default {
             this.addReviewData.rating = null;
             axios.get(`review/reviews-by-id/${this.imdbID}`)
             .then(res => {
-                console.log(res)
-                if (res === 'Aleady reviewed this movie') {
-                    return console.log(res)
-                }
                 this.reviews = this.formatDate(res.data.data)
             })
         })
         .catch(err => { 
             console.log(err)
-            //console.log(err.response)
+             if (err.response.data === 'Aleady reviewed this movie') {
+                    return this.addReviewErrorMessages.push('You aleady reviewed this movie. You can edit your review on your profile page.')
+                    //should i reset the vars here? a user might copy/paste their review
+                }
+            return this.addReviewErrorMessages.push('Sorry about that! There wsa an error reaching the API or returning data. Try reloading the page.')
+            
             })
       },
       formatDate (array) {
@@ -151,6 +169,12 @@ export default {
         })
           this.detail = res.data;
         } catch (e) {
+            const errDataObj = {
+                msg: 'Sorry, there was a problem getting movie details. Try reloading the page and search again.',
+                method: 'push'
+            }
+            this.$store.dispatch('PAGE_ERROR_ACTION', errDataObj)
+            //this.pageErrorMessages.push('Sorry, there was a problem getting movie details. Try reloading the page and search again.')
           console.log(e)
         }
 
@@ -159,6 +183,7 @@ export default {
             const dateFormattedReviewCall = await this.formatDate(reviewCall.data.data);
             this.reviews = dateFormattedReviewCall;
         } catch (error) {
+            this.getReviewErrors.push('Please add a rating')
             console.log(error)
         }
     }
@@ -167,5 +192,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 
 </style>

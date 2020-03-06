@@ -15,7 +15,7 @@
       </div>
       <form class="form-group mt-4" @submit.prevent="editReview(review._id)" v-show="showForm">
           <div class="form-group">
-              <textarea v-model="newReviewData.reviewString" class="form-control" id="addDetailReview" name="reviewString" rows="6" ></textarea>
+              <textarea v-model="newReviewData.reviewString" class="form-control" :id="review._id" name="reviewString" rows="6" ></textarea>
           </div>
           <div class="form-group mb-4">
             <b-form-select v-model="newReviewData.rating" :options="rating_options"></b-form-select>

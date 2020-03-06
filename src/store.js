@@ -14,9 +14,23 @@ export const store = new Vuex.Store({
             email: null,
             username: null,
             userID: null
-        }
+        },
+        pageErrors: []
     },
     mutations: {
+        PUSH_PAGE_ERROR_MUTATION: (state, item ) => {
+            
+            state.pageErrors.push(item)
+        },
+        POP_PAGE_ERROR_MUTATION: (state, item) => {
+            let newData = [];
+            state.pageErrors.forEach(node => {
+                if (node.Type != item) {
+                    newData.push(node)
+                }
+            });
+            return newData
+        },
         AUTH_REQUEST_MUTATION: (state) => {
             state.status = 'loading';
         },
@@ -47,6 +61,15 @@ export const store = new Vuex.Store({
 
     },
     actions: {
+        PAGE_ERROR_ACTION({ commit }, node) {
+            
+            if(node.method === 'push') {
+                console.log(node.msg)
+                commit('PUSH_PAGE_ERROR_MUTATION', node.msg)  
+            } else {
+                commit('POP_PAGE_ERROR_MUTATION', node.msg) 
+            }
+        },
         UPDATE_GLOBAL_LOADING({ commit }, boolean) {
             commit('UPDATE_GLOBAL_LOADING', boolean)
         },
@@ -130,6 +153,7 @@ export const store = new Vuex.Store({
         jwtData: (state, getters) => state.token ? JSON.parse(atob(getters.jwt.split('.')[1])) : null,
         isAuthenticated: (state)  =>  state.token ? true : false,   
         getUserData: (state) => state.userData,
-        isLoading: (state) => state.load
+        isLoading: (state) => state.load,
+        pageErrors: (state) => state.pageErrors
     }
 })

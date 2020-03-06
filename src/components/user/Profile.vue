@@ -3,8 +3,8 @@
     <div>
         <div class="row">
             <div class="col mt-5">
-                <h1>Profile</h1>
-                <h2>{{username}}</h2>
+                <h1 class="title">The Profile Of <b-icon-diamond></b-icon-diamond><span class="title-fizz">{{username}}</span><b-icon-diamond></b-icon-diamond></h1>
+                <!-- <h2>{{username}}</h2> -->
             </div>
         </div>
         <div class="row">
@@ -95,6 +95,14 @@ export default {
         }
     },
     created() {
+        if (!this.userID) {
+            const errDataObj = {
+                msg: 'Sorry, there was a problem getting movie details. Try reloading the page and search again.',
+                method: 'push'
+            }
+            return this.$store.dispatch('PAGE_ERROR_ACTION', errDataObj)
+            this.$router.push( { path: '/login' } )
+        }
         axios.get('review/reviews-by-user/' + this.userID)
         .then(res => {
             this.username = res.data[0].userName
@@ -110,3 +118,17 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .title svg:first-of-type {
+        transform: rotate(-30deg)
+    }
+
+    .title svg:last-of-type {
+        transform: rotate(30deg)
+    }
+
+    .title .title-fizz {
+        color: #7d0000;
+    }
+</style>

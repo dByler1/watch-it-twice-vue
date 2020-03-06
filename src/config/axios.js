@@ -22,8 +22,8 @@ axios.interceptors.response.use(function (config) {
     store.dispatch("UPDATE_GLOBAL_LOADING", false) //vuex mutation set loading state to false
     return config;
 }, function (error) {
-    console.log(error.response.data)
-    if (error.response.data.error.statusCode === 403) {
+        console.log('axios global error catch' + '\n' + JSON.stringify(error.response))
+    if (error.response.status === 403) {
         store.dispatch('AUTH_LOGOUT_ACTION')
         router.push({ path: '/login' })
     }

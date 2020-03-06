@@ -63,12 +63,16 @@
                         url: `search/term/${searchTerm}`,
                         transformRequest: [(data, headers) => { delete headers.common.Authorization; return data }]
                     })
-                    .catch(err => console.log(err))
+                    // .catch(err => console.log(err))
                     let data = await this.filterDuplicates(res.data.Search);
                     data = await this.filterType(data);
-                    console.log(data)
                     this.movies = data;
                 } catch (e) {
+                    const errDataObj = {
+                        msg: 'Sorry, there was a problem getting search results. Try to reload the page and search again.',
+                        method: 'push'
+                    }
+                    this.$store.dispatch('PAGE_ERROR_ACTION', errDataObj)
                     console.log(e)
                 }
             },
@@ -86,7 +90,7 @@
                 let newData = [];
 
                 data.forEach(node => {
-                    console.log(node)
+                    
                      if (node.Type != 'game') {
                          newData.push(node)
                     }

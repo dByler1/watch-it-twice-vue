@@ -28,6 +28,12 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
+        <div v-for="(message, index) of pageErrors" :key="index" >
+          <ErrorMessage :message="message"></ErrorMessage>
+          <!-- <b-alert variant="danger" dismissible show>
+              {{message}}
+          </b-alert> -->
+      </div>
       <router-view></router-view>
       <Loader :is-visible="isLoading"></Loader>
   </div>
@@ -36,10 +42,12 @@
 <script>
 import { mapGetters } from 'vuex';
 import Loader from './components/resources/elements/Loader'
+import ErrorMessage from './components/resources/elements/ErrorMessage';
 export default {
   name: 'app',
   components: {
-    Loader
+    Loader,
+    ErrorMessage
   },
   data () {
     return {
@@ -56,7 +64,8 @@ export default {
     ...mapGetters([
       'isAuthenticated',
       'getUserData',
-      'isLoading'
+      'isLoading',
+      'pageErrors'
     ])
   },
   // beforeCreate() {
