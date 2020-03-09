@@ -3,7 +3,7 @@
     <div>
         <div class="row">
             <div class="col mt-5">
-                <h1 class="title">The Profile Of <b-icon-diamond></b-icon-diamond><span class="title-fizz">{{username}}</span><b-icon-diamond></b-icon-diamond></h1>
+                <h1 class="title">The Profile Of {{username}}</h1>
                 <!-- <h2>{{username}}</h2> -->
             </div>
         </div>
@@ -120,15 +120,5 @@ export default {
 </script>
 
 <style scoped>
-    .title svg:first-of-type {
-        transform: rotate(-30deg)
-    }
 
-    .title svg:last-of-type {
-        transform: rotate(30deg)
-    }
-
-    .title .title-fizz {
-        color: #7d0000;
-    }
 </style>

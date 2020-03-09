@@ -77,7 +77,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css">
+
+  .navbar {
+    border-bottom: 2px solid #895061;
+  }
   .navbar-brand-logo {
     max-width: 100px;
   }
@@ -90,12 +94,14 @@ export default {
     /* background: #f5f5f5; */
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 0 3px #f9f9f9;;
+    /* box-shadow: 0 0 0 3px rgba(137, 80, 97, .2); */
   }
 
   .review-div-background {
-    background: #fdfcfc;
+    background: rgba(45, 65, 89, .1);
     padding: 20px;
     border-radius: 10px;
   }
+  
+
 </style>

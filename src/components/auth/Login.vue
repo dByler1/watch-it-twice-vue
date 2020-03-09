@@ -56,7 +56,6 @@ export default {
                     return this.formErrors.push(err.response.statusText)
                 }
                 return this.formErrors.push(err.response.data)
-                
             })
         }
     },

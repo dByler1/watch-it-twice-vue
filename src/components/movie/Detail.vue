@@ -4,7 +4,7 @@
         <!-- {{> messages }} -->
         <div class="col-12">
             <div class="media mt-5 mb-5 d-flex flex-column flex-md-row">
-                <img v-if="!detail.Poster === 'N/A'" :src="detail.Poster" class="mr-4 img-thumbnail" alt="...">
+                <img v-if="!(detail.Poster === 'N/A')" :src="detail.Poster" class="mr-4 img-thumbnail" alt="...">
                 <div class="media-body">
                     <b-tabs content-class="mt-4">
                         <b-tab title="Details"> <h5 class="mt-0">{{detail.Title}}</h5>
@@ -40,7 +40,7 @@
                                         </div>
 
                                         <button v-if="this.$store.getters.isAuthenticated" type="submit" class="btn btn-primary btn-block mt-3">Add Review</button>
-                                        <a v-if="!this.$store.getters.isAuthenticated" class="btn btn-secondary btn-block mt-3" @click="toLogin()" role="button">Please login to add a review</a>
+                                        <button v-if="!this.$store.getters.isAuthenticated" class="btn btn-secondary btn-block mt-3" @click="toLogin()" role="button">Please login to add a review</button>
                                     </form>
                                 </div>
                             </div>
