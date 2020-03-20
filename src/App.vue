@@ -1,11 +1,9 @@
 <template>
   <div id="app" class="container">
       <b-navbar toggleable="lg" type="light">
-        <router-link tag="a" to="/">
-          <b-navbar-brand>
-            <img class="navbar-brand-logo" src="./assets/Watch_It_Twice_Logo_Idea.png" alt="Kitten">
-          </b-navbar-brand>
-        </router-link>  
+        <b-navbar-brand class="noGo" tag="a" to="/">
+          <img class="navbar-brand-logo" src="./assets/Watch_It_Twice_Logo_Idea.png" alt="Watch It Twice Logo">
+        </b-navbar-brand>
         
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
@@ -79,11 +77,15 @@ export default {
 
 <style lang="css">
 
-  .navbar {
-    border-bottom: 2px solid #895061;
-  }
   .navbar-brand-logo {
-    max-width: 100px;
+    max-width: 110px;
+    border: 2px solid #895061;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .router-link-exact-active:not(.noGo) {
+    border-bottom: 2px solid #895061;
   }
 
   .pre-wrap {

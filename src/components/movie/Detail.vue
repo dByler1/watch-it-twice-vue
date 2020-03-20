@@ -38,9 +38,8 @@
                                                 <option>5</option>
                                             </select>
                                         </div>
-
                                         <button v-if="this.$store.getters.isAuthenticated" type="submit" class="btn btn-primary btn-block mt-3">Add Review</button>
-                                        <button v-if="!this.$store.getters.isAuthenticated" class="btn btn-secondary btn-block mt-3" @click="toLogin()" role="button">Please login to add a review</button>
+                                        <button v-if="!this.$store.getters.isAuthenticated" class="btn btn-outline-primary btn-block mt-3" @click="toLogin()" role="button">Please login to add a review</button>
                                     </form>
                                 </div>
                             </div>
@@ -51,7 +50,7 @@
                                         <ErrorMessage :message="message" ></ErrorMessage>
                                     </div>
                                     <ul v-if="reviews" class="list-group list-group-flush">
-                                        <li class="list-group-item" v-for="review of reviews.slice().reverse()" v-bind:key="review.imdbID">
+                                        <li class="list-group-item p-0 p-md-4" v-for="review of reviews.slice().reverse()" v-bind:key="review.imdbID">
                                             <div class="review-div-background">
                                                 <router-link tag="a" :to="'/profile/'+ review.user">
                                                     <div class="d-flex align-items-center">

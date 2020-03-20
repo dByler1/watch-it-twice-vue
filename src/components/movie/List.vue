@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
         <div class="row mt-5 mb-5">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <form @submit.prevent="omdbAPICall(text_input)">
                     <div class="form-group">
                         <input v-model="text_input" id="search" name="search" class="form-control" placeholder="Search again" />
@@ -26,10 +26,11 @@
                         </div>
                     
                         <div class="media-body">
-                            <router-link tag="b-button" :to="'/detail/'+ movie.imdbID" class="mt-3 mb-1">{{movie.Title}}</router-link>
+                            <b-button variant="outline-primary" :to="'/detail/'+ movie.imdbID" class="mt-3 mb-1">{{movie.Title}}</b-button>
+                            <!-- <router-link tag="b-button" :to="'/detail/'+ movie.imdbID" class="mt-3 mb-1">{{movie.Title}}</router-link> -->
                             <ul class="list-group">
-                                <li class="list-group-item text-secondary border-top-0 border-right-0 border-left-0"><span class="font-weight-bold">Year: </span>{{movie.Year}}</li>
-                                <li class="list-group-item text-secondary border-top-0 border-right-0 border-left-0"><span class="font-weight-bold">Type: </span>{{movie.Type}}</li>
+                                <li class="list-group-item text-slate border-top-0 border-right-0 border-left-0"><span class="font-weight-bold">Year: </span>{{movie.Year}}</li>
+                                <li class="list-group-item text-slate border-top-0 border-right-0 border-left-0"><span class="font-weight-bold">Type: </span>{{movie.Type}}</li>
                             </ul>
                         </div>
                     </li>
