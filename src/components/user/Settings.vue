@@ -52,7 +52,7 @@
                             @click="showForm('passwordForm')">
                             <b-icon-pencil></b-icon-pencil>
                         </button>
-                        <form class="form-inline" @submit.prevent="changeEmail()" v-show="showPasswordForm">
+                        <form class="form-inline" @submit.prevent="changePassword()" v-show="showPasswordForm">
                             <div class="form-group mx-sm-3 mb-2">
                                 <label for="newPassword" class="sr-only">New Password</label>
                                 <input type="password" class="form-control" id="newPassword"  required placeholder="New Password" v-model="newPassword">
@@ -86,6 +86,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import axios from 'axios';// eslint-disable-line no-unused-vars
+
+import { USER_DATA_REQUEST_ACTION, AUTH_LOGOUT_ACTION } from "@/store/actions.type"; 
 
 export default {
     name: 'Settings',
@@ -126,7 +128,7 @@ export default {
                 }
             })
             .then(res => { // eslint-disable-line no-unused-vars
-                this.$store.dispatch('USER_DATA_REQUEST_ACTION');
+                this.$store.dispatch(USER_DATA_REQUEST_ACTION);
                 this.showNameForm = false;
                 this.newName = null;
             })
@@ -169,7 +171,7 @@ export default {
                 }
             })
             .then(res => {// eslint-disable-line no-unused-vars
-                this.$store.dispatch('USER_DATA_REQUEST_ACTION')
+                this.$store.dispatch(USER_DATA_REQUEST_ACTION)
                 this.showEmailForm = false;
                 this.newEmail = null;
             })
@@ -187,7 +189,7 @@ export default {
                 }
             })
             .then(res => {// eslint-disable-line no-unused-vars
-                this.$store.dispatch('AUTH_LOGOUT_ACTION')
+                this.$store.dispatch(AUTH_LOGOUT_ACTION)
                 this.$router.push( { path: '/' } )
             })
             .catch(err => {

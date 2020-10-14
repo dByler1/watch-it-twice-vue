@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
-import './config/axios';
+import './common/axios';
 import Vuelidate from 'vuelidate'
 import { router } from './Router';
-import { store } from './store';
+import store from './store';
 
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';

@@ -36,6 +36,7 @@
 </template>
 <script>
 import ErrorMessage from '../resources/elements/ErrorMessage';
+import { REGISTER_REQUEST_ACTION } from "@/store/actions.type";
 export default {
     name: "Register",
     components: {
@@ -57,7 +58,7 @@ export default {
             if (this.registerData.password != this.registerData.password2) {
                 return this.formErrors.push('Password confirmation does not match password')
             }
-            this.$store.dispatch('REGISTER_REQUEST_ACTION', this.registerData)
+            this.$store.dispatch(REGISTER_REQUEST_ACTION, this.registerData)
             .then((res) => { // eslint-disable-line no-unused-vars
                 this.$router.push({ path: '/login'})
             })

@@ -27,6 +27,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex'
 import EditReviewForm from '../resources/elements/EditReviewForm';
+import { PAGE_ERROR_ACTION } from "@/store/actions.type"; 
 
 export default {
     name: 'Profile',
@@ -100,7 +101,7 @@ export default {
                 msg: 'Sorry, there was a problem getting movie details. Try reloading the page and search again.',
                 method: 'push'
             }
-            return this.$store.dispatch('PAGE_ERROR_ACTION', errDataObj)
+            return this.$store.dispatch(PAGE_ERROR_ACTION, errDataObj)
             this.$router.push( { path: '/login' } )
         }
         axios.get('review/reviews-by-user/' + this.userID)

@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { router } from '../Router';
-import { store } from '../store';
-let development = process.env.NODE_ENV !== 'production'
+import store from '../store';
+import { API_URL } from './config';
+
+import { AUTH_LOGOUT_ACTION } from "@/store/actions.type";
 
 const token = localStorage.getItem('user-token');
 
@@ -10,7 +12,7 @@ if (token) {
 }
 
 axios.interceptors.request.use(function (config) {
-    store.dispatch("UPDATE_GLOBAL_LOADING", true) //vuex mutation set loading state to true
+
     return config;
 }, function (error) {
     return Promise.reject(error);
@@ -19,15 +21,15 @@ axios.interceptors.request.use(function (config) {
 //Axios response interceptor
 
 axios.interceptors.response.use(function (config) {
-    store.dispatch("UPDATE_GLOBAL_LOADING", false) //vuex mutation set loading state to false
     return config;
 }, function (error) {
+    console.log(error)
         console.log('axios global error catch' + '\n' + JSON.stringify(error.response))
     if (error.response.status === 403) {
-        store.dispatch('AUTH_LOGOUT_ACTION')
+        store.dispatch(AUTH_LOGOUT_ACTION)
         router.push({ path: '/login' })
     }
     return Promise.reject(error);
 });
 
-axios.defaults.baseURL = development ? 'http://localhost:3000/' : 'https://watch-it-twice.herokuapp.com/';
+axios.defaults.baseURL = API_URL;

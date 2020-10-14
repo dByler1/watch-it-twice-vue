@@ -33,7 +33,6 @@
           </b-alert> -->
       </div>
       <router-view></router-view>
-      <Loader :is-visible="isLoading"></Loader>
   </div>
 </template>
 
@@ -41,10 +40,10 @@
 import { mapGetters } from 'vuex';
 import Loader from './components/resources/elements/Loader'
 import ErrorMessage from './components/resources/elements/ErrorMessage';
+import { AUTH_LOGOUT_ACTION, USER_DATA_REQUEST_ACTION } from "@/store/actions.type";
 export default {
   name: 'app',
   components: {
-    Loader,
     ErrorMessage
   },
   data () {
@@ -54,7 +53,7 @@ export default {
   },
   methods: {
     signOut() {
-      this.$store.dispatch("AUTH_LOGOUT_ACTION")
+      this.$store.dispatch(AUTH_LOGOUT_ACTION)
       this.$router.push({ path: '/login'})
     },
   },
@@ -62,15 +61,14 @@ export default {
     ...mapGetters([
       'isAuthenticated',
       'getUserData',
-      'isLoading',
       'pageErrors'
     ])
   },
-  // beforeCreate() {
-  //   if(this.$store.getters.isAuthenticated && !this.$store.getters.getUserData.email) {
-  //     this.$store.dispatch('USER_DATA_REQUEST_ACTION')
-  //   }
-  // }
+  beforeCreate() {
+    if(this.$store.getters.isAuthenticated && !this.$store.getters.getUserData.email) {
+      this.$store.dispatch(USER_DATA_REQUEST_ACTION)
+    }
+  }
   
 }
 </script>
